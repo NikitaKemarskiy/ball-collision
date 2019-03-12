@@ -1,56 +1,94 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.Scanner;
+import javax.swing.border.EmptyBorder;
 
-public class Form {
+class Form extends JFrame {
     // Private
-    private Form() {}
+    private int width = 0;
+    private int height = 0;
+    private Container pane = null;
 
     // Public
-    public static JFrame getFrame() {
+    public Form() {
+        super();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        JFrame window = new JFrame() { // New window
-            // Anonymous class code
-        };
         Dimension screenSize = toolkit.getScreenSize();
-        window.setSize(screenSize.width / 3, (int) (screenSize.height / 2.5)); // Size
-        window.setLocation(screenSize.width / 2 - window.getWidth() / 2, screenSize.height / 2 - window.getHeight() / 2); // Location
-        window.setTitle("Ball collision"); // Title
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exit program after closing a window
-        return window;
+        width = screenSize.width;
+        height = screenSize.height;
+        pane = this.getContentPane();
+        pane.setLayout(new OverlayLayout(pane));
+        this.setSize(screenSize.width / 3, (int) (screenSize.height / 2.5)); // Size
+        this.setLocation(screenSize.width / 2 - this.getWidth() / 2, screenSize.height / 2 - this.getHeight() / 2); // Location
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
     }
 
-    public static void draw(JFrame window) {
-        Container container = window.getContentPane();
-        container.add(new MyComponent());
-        container.setBackground(new Color(255, 255, 255));
-        window.setVisible(true);
+    public Form(String title) {
+        super(title);
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = toolkit.getScreenSize();
+        width = screenSize.width;
+        height = screenSize.height;
+        pane = this.getContentPane();
+        pane.setLayout(new OverlayLayout(pane));
+        this.setSize(screenSize.width / 3, (int) (screenSize.height / 2.5)); // Size
+        this.setLocation(screenSize.width / 2 - this.getWidth() / 2, screenSize.height / 2 - this.getHeight() / 2); // Location
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
+    }
+
+    public void draw(int ball1Size, int ball2Size) {
+        JComponent graphics = new MyComponent(ball1Size, ball2Size);
+        JPanel options = new JPanel(new FlowLayout());
+
+        options.setBorder(new EmptyBorder(10, 10, 10, 10));
+        options.setSize(160, 190);
+        options.add(new JButton("button"));
+        options.add(new JTextField(15));
+        options.setBackground(new Color(0, 0, 0, 70));
+        options.setAlignmentX(0.3f);
+        options.setAlignmentY(0.3f);
+        options.setOpaque(true);
+
+        pane.add(options);
+        pane.add(graphics);
     }
 }
 
-class MyComponent extends Component {
-    private int defaultSize = 30;
-
-    public void paint(Graphics g) {
-        drawBalls(g);
-    }
+class MyComponent extends JComponent {
+    // Private
+    private static int defaultSize = 30;
+    private int ball1Size;
+    private int ball2Size;
 
     private void drawBalls(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         int width = getWidth(); // Application width
         int height = getHeight(); // Application height
-        int ball1Size = defaultSize;
-        int ball2Size = defaultSize * 3;
-        Ellipse2D ball1 = new Ellipse2D.Double(width - ball1Size, height - ball1Size, ball1Size, ball1Size);
-        Ellipse2D ball2 = new Ellipse2D.Double(0, height - ball2Size, ball2Size, ball2Size);
+        int ball1Diameter = defaultSize * ball1Size;
+        int ball2Diameter = defaultSize * ball2Size;
+        if (ball1Diameter > getHeight() * 0.7 || ball2Diameter > getHeight() * 0.7) {
+            double ratio = ball1Diameter > getHeight() * 0.7 ? ball1Diameter / (getHeight() * 0.7) : 1;
+            ratio = ratio > ball2Diameter / (getHeight() * 0.7) ? ratio : ball2Diameter / (getHeight() * 0.7);
+            ball1Diameter /= ratio;
+            ball2Diameter /= ratio;
+        }
+        Ellipse2D ball1 = new Ellipse2D.Double(0, height - ball1Diameter, ball1Diameter, ball1Diameter);
+        Ellipse2D ball2 = new Ellipse2D.Double(width - ball2Diameter, height - ball2Diameter, ball2Diameter, ball2Diameter);
 
-        /*g2.setStroke(new BasicStroke(3));
-        g2.setPaint(Color.BLACK);
-        g2.draw(ball1);
-        g2.draw(ball2);*/
         g2.setPaint(Color.RED);
         g2.fill(ball1);
         g2.fill(ball2);
+    }
+
+    // Public
+    MyComponent(int ball1Size, int ball2Size) {
+        this.ball1Size = ball1Size;
+        this.ball2Size = ball2Size;
+    }
+
+    public void paint(Graphics g) {
+        drawBalls(g);
     }
 }
