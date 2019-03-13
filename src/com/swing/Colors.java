@@ -2,7 +2,7 @@ package com.swing;
 
 import java.awt.*;
 
-class Colors {
+public class Colors {
     // Private
     private Colors() {}
 

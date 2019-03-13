@@ -1,5 +1,7 @@
 package com.swing;
 
+import com.graphics.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -44,7 +46,7 @@ public class Form extends JFrame {
         this.setLocation(screenWidth / 2 - this.getWidth() / 2, screenHeight / 2 - this.getHeight() / 2); // Location
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        this.draw(1, 1);
+        this.draw(11, 9);
     }
 
     // Function that starts ball collision imitation process
@@ -55,45 +57,5 @@ public class Form extends JFrame {
     // Function that starts ball collision imitation process
     public void stop() {
         //...
-    }
-}
-
-class GraphicsComponent extends JComponent {
-    // Private
-    private static int defaultSize = 30;
-    private int ball1Size;
-    private int ball2Size;
-
-    // Public
-    GraphicsComponent(int ball1Size, int ball2Size) {
-        this.ball1Size = ball1Size;
-        this.ball2Size = ball2Size;
-    }
-
-    public void paint(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        int width = getWidth(); // Application width
-        int height = getHeight(); // Application height
-        int ball1Diameter = defaultSize * ball1Size;
-        int ball2Diameter = defaultSize * ball2Size;
-        if (ball1Diameter > getHeight() * 0.7 || ball2Diameter > getHeight() * 0.7) {
-            double ratio = ball1Diameter > getHeight() * 0.7 ? ball1Diameter / (getHeight() * 0.7) : 1;
-            ratio = ratio > ball2Diameter / (getHeight() * 0.7) ? ratio : ball2Diameter / (getHeight() * 0.7);
-            ball1Diameter /= ratio;
-            ball2Diameter /= ratio;
-        }
-        Ellipse2D ball1 = new Ellipse2D.Double(0, height - ball1Diameter, ball1Diameter, ball1Diameter);
-        Ellipse2D ball2 = new Ellipse2D.Double(width - ball2Diameter, height - ball2Diameter, ball2Diameter, ball2Diameter);
-
-        g2.setColor(Colors.main);
-        g2.fillRect(0, 0, width, height);
-        g2.setPaint(Colors.extra);
-        g2.fill(ball1);
-        g2.fill(ball2);
-    }
-
-    public void setBallSize(int ball1Size, int ball2Size) {
-        this.ball1Size = ball1Size;
-        this.ball2Size = ball2Size;
     }
 }
