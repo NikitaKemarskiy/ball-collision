@@ -1,13 +1,8 @@
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import com.swing.Form;
 
 public class Main {
     public static void main(String[] args) {
-        Form window = new Form("Ball collision");
-        window.draw(9, 8);
-
-        window.update();
-
+        Form window = new Form();
         window.setVisible(true);
     }
 }
