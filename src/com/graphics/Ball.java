@@ -4,22 +4,26 @@ import java.awt.*;
 
 public class Ball {
     // Private
-    private Direction directon;
     private Position position;
+    private Direction direction;
     private int size;
     private int diameter;
 
     // Public
     Ball(Position position, Direction direction, int size) {
         this.position = position;
-        this.directon = direction;
+        this.direction = direction;
         this.size = size;
         this.diameter = GraphicsComponent.defaultSize * this.size;
     }
 
     // Getters
+    public Position getPosition() {
+        return position;
+    }
+
     public Direction getDirecton() {
-        return directon;
+        return direction;
     }
 
     public int getSize() {
@@ -31,9 +35,22 @@ public class Ball {
     }
 
     // Setters
-    public void setDirecton(int x, int y) {
-        this.directon.setX(x);
-        this.directon.setY(x);
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public void setPosition(int x, int y) {
+        position.setX(x);
+        position.setY(y);
+    }
+
+    public void setDirecton(Direction direction) {
+        this.direction = direction;
+    }
+
+    public void setDirection(int x, int y) {
+        direction.setX(x);
+        direction.setY(y);
     }
 
     public void setSize(int size) {

@@ -46,7 +46,7 @@ public class Form extends JFrame {
         this.setLocation(screenWidth / 2 - this.getWidth() / 2, screenHeight / 2 - this.getHeight() / 2); // Location
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        this.draw(11, 9);
+        this.draw(1, 1);
     }
 
     // Function that starts ball collision imitation process
