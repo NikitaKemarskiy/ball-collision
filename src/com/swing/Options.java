@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 class Options extends JPanel {
     // Private
@@ -110,5 +112,21 @@ class Options extends JPanel {
         this.add(ballPanel);
         this.add(setButton);
         this.add(startButton);
+    }
+
+    public JSpinner getBall1Spinner() {
+        return ball1Spinner;
+    }
+
+    public JSpinner getBall2Spinner() {
+        return ball2Spinner;
+    }
+
+    public JButton getSetButton() {
+        return setButton;
+    }
+
+    public JButton getStartButton() {
+        return startButton;
     }
 }

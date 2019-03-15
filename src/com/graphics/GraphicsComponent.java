@@ -10,7 +10,7 @@ public class GraphicsComponent extends JComponent {
     // Private
     private Ball ball1;
     private Ball ball2;
-    private boolean isInitialized = false;
+    private boolean isStarted = false;
 
     // Public
     public static int defaultSize = 30;
@@ -25,8 +25,7 @@ public class GraphicsComponent extends JComponent {
         int width = getWidth(); // Application width
         int height = getHeight(); // Application height
 
-        if (!isInitialized) { // GraphicsComponent has just been created
-            isInitialized = true;
+        if (!isStarted) { // GraphicsComponent has just been created
             if (ball1.getDiameter() > height * 0.7 || ball2.getDiameter() > height * 0.7) { // Ball is too big
                 double ratio = ball1.getDiameter() > height * 0.7 ? ball1.getDiameter() / (height * 0.7) : 1; // Find ratio
                 ratio = ratio > ball2.getDiameter() / (height * 0.7) ? ratio : ball2.getDiameter() / (height * 0.7);
@@ -48,7 +47,25 @@ public class GraphicsComponent extends JComponent {
     }
 
     public void setBallSize(int ball1Size, int ball2Size) {
-        /*this.ball1Size = ball1Size;
-        this.ball2Size = ball2Size;*/
+        ball1.setSize(ball1Size);
+        ball2.setSize(ball2Size);
+        this.stop();
+    }
+
+    public boolean isStarted() {
+        return this.isStarted;
+    }
+
+    public void start() { // Method that starts an animation
+        if (this.isStarted) { // Animation is already started
+            return;
+        }
+    }
+
+    public void stop() { // Method that stops an animation
+        if (!this.isStarted) { // Animation is already stopped
+            return;
+        }
+        this.isStarted = false;
     }
 }

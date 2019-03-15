@@ -8,6 +8,7 @@ public class Ball {
     private Direction direction;
     private int size;
     private int diameter;
+    private int speed;
 
     // Public
     Ball(Position position, Direction direction, int size) {
@@ -15,6 +16,7 @@ public class Ball {
         this.direction = direction;
         this.size = size;
         this.diameter = GraphicsComponent.defaultSize * this.size;
+        this.speed = 0;
     }
 
     // Getters
@@ -61,4 +63,6 @@ public class Ball {
     public void setDiameter(int diameter) {
         this.diameter = diameter;
     }
+
+    public void setSpeed(int speed) { this.speed = speed; }
 }

@@ -4,6 +4,8 @@ import com.graphics.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.*;
 
 public class Form extends JFrame {
@@ -18,14 +20,21 @@ public class Form extends JFrame {
     private void draw(int ball1Size, int ball2Size) {
         graphics = new GraphicsComponent(ball1Size, ball2Size); // Graphics component
         options = new Options();
+        options.getSetButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                graphics.setBallSize((int)(options.getBall1Spinner().getValue()), (int)(options.getBall2Spinner().getValue()));
+                graphics.repaint();
+            }
+        });
+        options.getStartButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                graphics.start();
+            }
+        });
         pane.add(options);
         pane.add(graphics);
-    }
-
-    // Function that updates ball size
-    private void updateBallSize(int ball1Size, int ball2Size) {
-        graphics.setBallSize(ball1Size, ball2Size);
-        graphics.repaint();
     }
 
     // Static initialization block
