@@ -36,6 +36,8 @@ public class Ball {
         return diameter;
     }
 
+    public int getSpeed() { return speed; }
+
     // Setters
     public void setPosition(Position position) {
         this.position = position;
@@ -50,7 +52,7 @@ public class Ball {
         this.direction = direction;
     }
 
-    public void setDirection(int x, int y) {
+    public void setDirection(double x, double y) {
         direction.setX(x);
         direction.setY(y);
     }

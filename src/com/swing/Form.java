@@ -23,6 +23,7 @@ public class Form extends JFrame {
         options.getSetButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                options.getStartButton().setText("Start"); // Set new text to the start button
                 graphics.setBallSize((int)(options.getBall1Spinner().getValue()), (int)(options.getBall2Spinner().getValue()));
                 graphics.repaint();
             }
@@ -30,7 +31,13 @@ public class Form extends JFrame {
         options.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                graphics.start();
+                if (graphics.isStarted()) { // Animation is already started
+                    graphics.stop();
+                } else { // Animation is stopped
+                    graphics.start();
+                }
+                // Set new text to the start button
+                options.getStartButton().setText(options.getStartButton().getText() == "Start" ? "Stop" : "Start");
             }
         });
         pane.add(options);
@@ -60,11 +67,11 @@ public class Form extends JFrame {
 
     // Function that starts ball collision imitation process
     public void start() {
-        //...
+        graphics.start();
     }
 
     // Function that starts ball collision imitation process
     public void stop() {
-        //...
+        graphics.stop();
     }
 }
