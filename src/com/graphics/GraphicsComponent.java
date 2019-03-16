@@ -18,6 +18,7 @@ public class GraphicsComponent extends JComponent {
 
     // Public
     public static int defaultSize = 30;
+    public static int intervalTime = 3;
 
     public GraphicsComponent(int ball1Size, int ball2Size) {
         ball1 = new Ball(new Position(0, 0), new Direction(0.3, 0.6), ball1Size);
@@ -77,16 +78,20 @@ public class GraphicsComponent extends JComponent {
                 repaint();
             }
         };
-        interval.schedule(intervalTask, 0, 3); // Set interval
+        interval.schedule(intervalTask, 0, intervalTime); // Set interval
     }
 
     public void stop() { // Method that stops an animation
         if (!isStarted) { // Animation is already stopped
             return;
         }
-        System.out.println("=> Animation stopped"); // Debug log
-        isStarted = false;
         intervalTask.cancel();
+        (new Timer()).schedule(new TimerTask() { // Set timeout to make isStarted false
+            @Override
+            public void run() {
+                isStarted = false;
+            }
+        }, intervalTime);
     }
 
     public void updatePosition() { // Method that updated balls position
