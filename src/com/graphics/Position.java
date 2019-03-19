@@ -46,7 +46,7 @@ public class Position {
     // Methods for changing buffered fractional values
     public void addXBuff(double xBuff) {
         this.xBuff += xBuff;
-        if (this.xBuff >= 1) { // xBuff is greater than 1
+        if (this.xBuff >= 1 || this.xBuff <= -1) { // xBuff is greater than 1
             this.x += (int) this.xBuff; // Add a whole part to the X coordinate
             this.xBuff -= (int) this.xBuff; // Leave only a fractional part in the xBuff variable
         }
@@ -54,7 +54,7 @@ public class Position {
 
     public void addYBuff(double yBuff) {
         this.yBuff += yBuff;
-        if (this.yBuff >= 1) { // yBuff is greater than 1
+        if (this.yBuff >= 1 || this.yBuff <= -1) { // yBuff is greater than 1
             this.y += (int) this.yBuff; // Add a whole part to the Y coordinate
             this.yBuff -= (int) this.yBuff; // Leave only a fractional part in the yBuff variable
         }

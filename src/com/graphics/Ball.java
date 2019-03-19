@@ -67,4 +67,13 @@ public class Ball {
     }
 
     public void setSpeed(int speed) { this.speed = speed; }
+
+    // Methods
+    public void reverseXDirection() {
+        direction.setX((-1) * direction.getX());
+    }
+
+    public void reverseYDirection() {
+        direction.setY((-1) * direction.getY());
+    }
 }

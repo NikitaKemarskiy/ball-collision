@@ -21,8 +21,8 @@ public class GraphicsComponent extends JComponent {
     public static int intervalTime = 3;
 
     public GraphicsComponent(int ball1Size, int ball2Size) {
-        ball1 = new Ball(new Position(0, 0), new Direction(0.3, 0.6), ball1Size);
-        ball2 = new Ball(new Position(0, 0), new Direction(-1, 0), ball2Size);
+        ball1 = new Ball(new Position(0, 0), new Direction(0.3, -0.5), ball1Size);
+        ball2 = new Ball(new Position(0, 0), new Direction(-0.7, -0.3), ball2Size);
         ball1.setSpeed(2);
         ball2.setSpeed(2);
     }
@@ -97,13 +97,14 @@ public class GraphicsComponent extends JComponent {
     public void updatePosition() { // Method that updated balls position
         int width = getWidth(); // Application width
         int height = getHeight(); // Application height
-
-        // Update ball positions
+        System.out.println("Ball1 => Direction: (" + ball1.getDirecton().getX() + "; " + ball1.getDirecton().getY() + "), Position: (" + ball1.getPosition().getX() + "; " + ball1.getPosition().getY() + ")");
+        // Update ball buffered positions
         ball1.getPosition().addXBuff((ball1.getDirecton().getX() * ball1.getSpeed()) - (int) (ball1.getDirecton().getX() * ball1.getSpeed()));
         ball1.getPosition().addYBuff((ball1.getDirecton().getY() * ball1.getSpeed()) - (int) (ball1.getDirecton().getY() * ball1.getSpeed()));
         ball2.getPosition().addXBuff((ball2.getDirecton().getX() * ball2.getSpeed()) - (int) (ball2.getDirecton().getX() * ball2.getSpeed()));
         ball2.getPosition().addYBuff((ball2.getDirecton().getY() * ball2.getSpeed()) - (int) (ball2.getDirecton().getY() * ball2.getSpeed()));
 
+        // Update ball positions
         ball1.getPosition().setX(ball1.getPosition().getX() + (int) (ball1.getDirecton().getX() * ball1.getSpeed()));
         ball1.getPosition().setY(ball1.getPosition().getY() + (int) (ball1.getDirecton().getY() * ball1.getSpeed()));
         ball2.getPosition().setX(ball2.getPosition().getX() + (int) (ball2.getDirecton().getX() * ball2.getSpeed()));
@@ -113,43 +114,43 @@ public class GraphicsComponent extends JComponent {
         if (ball1.getPosition().getX() > (width - ball1.getDiameter())) { // Ball1 X is greater than screen width
             int diff = ball1.getPosition().getX() - (width - ball1.getDiameter()); // Find how much new ball1 X is greater than screen width
             ball1.getPosition().setX((width - ball1.getDiameter()) - diff); // Set new X position
-            ball1.getDirecton().setX((-1) * ball1.getDirecton().getX()); // Revert ball1 X direction
+            ball1.reverseXDirection(); // Reverse ball1 X direction
         }
         if (ball1.getPosition().getX() < 0) { // Ball1 X is less than 0
             int diff = 0 - ball1.getPosition().getX(); // Find how much new ball1 X is less than 0
             ball1.getPosition().setX(diff);
-            ball1.getDirecton().setX((-1) * ball1.getDirecton().getX()); // Revert ball1 X direction
+            ball1.reverseXDirection(); // Reverse ball1 X direction
         }
         if (ball2.getPosition().getX() > (width - ball2.getDiameter())) { // Ball2 X is greater than screen width
             int diff = ball2.getPosition().getX() - (width - ball2.getDiameter()); // Find how much new ball2 X is greater than screen width
             ball2.getPosition().setX((width - ball2.getDiameter()) - diff);
-            ball2.getDirecton().setX((-1) * ball2.getDirecton().getX()); // Revert ball2 X direction
+            ball2.reverseXDirection(); // Reverse ball2 X direction
         }
         if (ball2.getPosition().getX() < 0) { // Ball2 X is less than 0
             int diff = 0 - ball2.getPosition().getX(); // Find how much new ball2 X is less than 0
             ball2.getPosition().setX(diff);
-            ball2.getDirecton().setX((-1) * ball2.getDirecton().getX()); // Revert ball2 X direction
+            ball2.reverseXDirection(); // Reverse ball2 X direction
         }
         // Check Y direction
         if (ball1.getPosition().getY() > (height - ball1.getDiameter())) { // Ball1 Y is greater than screen height
             int diff = ball1.getPosition().getY() - (height - ball1.getDiameter()); // Find how much new ball1 Y is greater than screen height
             ball1.getPosition().setY((height - ball1.getDiameter()) - diff);
-            ball1.getDirecton().setY((-1) * ball1.getDirecton().getY()); // Revert ball1 Y direction
+            ball1.reverseYDirection(); // Reverse ball1 Y direction
         }
         if (ball1.getPosition().getY() < 0) { // Ball1 Y is less than 0
             int diff = 0 - ball1.getPosition().getY(); // Find how much new ball1 Y is less than 0
             ball1.getPosition().setY(diff);
-            ball1.getDirecton().setY((-1) * ball1.getDirecton().getY()); // Revert ball1 Y direction
+            ball1.reverseYDirection(); // Reverse ball1 Y direction
         }
         if (ball2.getPosition().getY() > (height - ball2.getDiameter())) { // Ball2 Y is greater than screen height
             int diff = ball2.getPosition().getY() - (height - ball2.getDiameter()); // Find how much new ball2 Y is greater than screen height
             ball2.getPosition().setY((height - ball2.getDiameter()) - diff);
-            ball2.getDirecton().setY((-1) * ball2.getDirecton().getY()); // Revert ball2 Y direction
+            ball2.reverseYDirection(); // Reverse ball2 Y direction
         }
         if (ball2.getPosition().getY() < 0) { // Ball2 Y is less than 0
             int diff = 0 - ball2.getPosition().getY(); // Find how much new ball2 Y is less than 0
             ball2.getPosition().setY(diff);
-            ball2.getDirecton().setY((-1) * ball2.getDirecton().getY()); // Revert ball2 Y direction
+            ball2.reverseYDirection(); // Reverse ball2 Y direction
         }
     }
 }
