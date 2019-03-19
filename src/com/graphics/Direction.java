@@ -33,4 +33,9 @@ public class Direction {
     public void setY(double y) {
         this.y = y;
     }
+
+    // Static methods
+    public static double dotProduct(Direction direction1, Direction direction2) {
+        return direction1.getX() * direction2.getX() + direction1.getY() * direction2.getY();
+    }
 }

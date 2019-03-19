@@ -59,6 +59,8 @@ public class GraphicsComponent extends JComponent {
         ball2.setSize(ball2Size);
         ball1.setDirection(1, 0);
         ball2.setDirection(-1, 0);
+        /*ball1.setDirection(0.7, 0.3);
+        ball2.setDirection(-0.3, -0.1);*/
     }
 
     public boolean isStarted() {
@@ -97,7 +99,7 @@ public class GraphicsComponent extends JComponent {
     public void updatePosition() { // Method that updated balls position
         int width = getWidth(); // Application width
         int height = getHeight(); // Application height
-        System.out.println("Ball1 => Direction: (" + ball1.getDirecton().getX() + "; " + ball1.getDirecton().getY() + "), Position: (" + ball1.getPosition().getX() + "; " + ball1.getPosition().getY() + ")");
+
         // Update ball buffered positions
         ball1.getPosition().addXBuff((ball1.getDirecton().getX() * ball1.getSpeed()) - (int) (ball1.getDirecton().getX() * ball1.getSpeed()));
         ball1.getPosition().addYBuff((ball1.getDirecton().getY() * ball1.getSpeed()) - (int) (ball1.getDirecton().getY() * ball1.getSpeed()));
@@ -151,6 +153,31 @@ public class GraphicsComponent extends JComponent {
             int diff = 0 - ball2.getPosition().getY(); // Find how much new ball2 Y is less than 0
             ball2.getPosition().setY(diff);
             ball2.reverseYDirection(); // Reverse ball2 Y direction
+        }
+
+        // Find balls centers
+        Position ball1Center = new Position(ball1.getPosition().getX() + ball1.getDiameter() / 2, ball1.getPosition().getY() + ball1.getDiameter() / 2);
+        Position ball2Center = new Position(ball2.getPosition().getX() + ball2.getDiameter() / 2, ball2.getPosition().getY() + ball2.getDiameter() / 2);
+
+        // Collision
+        // Calculate distance between balls centers
+        double distance = Math.sqrt(Math.pow((ball2Center.getX() - ball1Center.getX()), 2) + Math.pow((ball2Center.getY() - ball1Center.getY()), 2));
+        if (distance <= (ball1.getDiameter() / 2 + ball2.getDiameter() / 2 + 2) && !Ball.movingOpposite(ball1, ball2)) { // Collision happened
+            double ball1X = ball1.getDirecton().getX() - 2 * ball2.getMass() / (ball1.getMass() + ball2.getMass()) *
+                            Direction.dotProduct(new Direction(ball1.getDirecton().getX() - ball2.getDirecton().getX(), ball1.getDirecton().getY() - ball2.getDirecton().getY()), new Direction(ball1Center.getX() - ball2Center.getX(), ball1Center.getY() - ball2Center.getY())) /
+                            Math.pow(Math.sqrt(Math.pow(ball1Center.getX() - ball2Center.getX(), 2) + Math.pow(ball1Center.getY() - ball2Center.getY(), 2)) , 2) * (ball1Center.getX() - ball2Center.getX());
+            double ball1Y = ball1.getDirecton().getY() - 2 * ball2.getMass() / (ball1.getMass() + ball2.getMass()) *
+                            Direction.dotProduct(new Direction(ball1.getDirecton().getX() - ball2.getDirecton().getX(), ball1.getDirecton().getY() - ball2.getDirecton().getY()), new Direction(ball1Center.getX() - ball2Center.getX(), ball1Center.getY() - ball2Center.getY())) /
+                            Math.pow(Math.sqrt(Math.pow(ball1Center.getX() - ball2Center.getX(), 2) + Math.pow(ball1Center.getY() - ball2Center.getY(), 2)) , 2) * (ball1Center.getY() - ball2Center.getY());
+            double ball2X = ball2.getDirecton().getX() - 2 * ball1.getMass() / (ball1.getMass() + ball2.getMass()) *
+                            Direction.dotProduct(new Direction(ball2.getDirecton().getX() - ball1.getDirecton().getX(), ball2.getDirecton().getY() - ball1.getDirecton().getY()), new Direction(ball2Center.getX() - ball1Center.getX(), ball2Center.getY() - ball1Center.getY())) /
+                            Math.pow(Math.sqrt(Math.pow(ball2Center.getX() - ball1Center.getX(), 2) + Math.pow(ball2Center.getY() - ball1Center.getY(), 2)) , 2) * (ball2Center.getX() - ball1Center.getX());
+            double ball2Y = ball2.getDirecton().getY() - 2 * ball1.getMass() / (ball1.getMass() + ball2.getMass()) *
+                            Direction.dotProduct(new Direction(ball2.getDirecton().getX() - ball1.getDirecton().getX(), ball2.getDirecton().getY() - ball1.getDirecton().getY()), new Direction(ball2Center.getX() - ball1Center.getX(), ball2Center.getY() - ball1Center.getY())) /
+                            Math.pow(Math.sqrt(Math.pow(ball2Center.getX() - ball1Center.getX(), 2) + Math.pow(ball2Center.getY() - ball1Center.getY(), 2)) , 2) * (ball2Center.getY() - ball1Center.getY());
+
+            ball1.setDirection(ball1X, ball1Y);
+            ball2.setDirection(ball2X, ball2Y);
         }
     }
 }
