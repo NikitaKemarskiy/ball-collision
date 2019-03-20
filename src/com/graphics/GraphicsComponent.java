@@ -62,11 +62,8 @@ public class GraphicsComponent extends JComponent {
     }
 
     public void setBallSpeed(int ball1Speed, int ball2Speed) {
-        //this.stop();
         ball1.setSpeed(ball1Speed);
         ball2.setSpeed(ball2Speed);
-        //ball1.setDirection(1, 0);
-        //ball2.setDirection(-1, 0);
     }
 
     public boolean isStarted() {
