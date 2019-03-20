@@ -21,8 +21,8 @@ public class GraphicsComponent extends JComponent {
     public static int intervalTime = 3;
 
     public GraphicsComponent(int ball1Size, int ball2Size) {
-        ball1 = new Ball(new Position(0, 0), new Direction(0.3, -0.5), ball1Size);
-        ball2 = new Ball(new Position(0, 0), new Direction(-0.7, -0.3), ball2Size);
+        ball1 = new Ball(new Position(0, 0), new Direction(1, 0), ball1Size);
+        ball2 = new Ball(new Position(0, 0), new Direction(-1, 0), ball2Size);
         ball1.setSpeed(2);
         ball2.setSpeed(2);
     }
@@ -59,8 +59,14 @@ public class GraphicsComponent extends JComponent {
         ball2.setSize(ball2Size);
         ball1.setDirection(1, 0);
         ball2.setDirection(-1, 0);
-        /*ball1.setDirection(0.7, 0.3);
-        ball2.setDirection(-0.3, -0.1);*/
+    }
+
+    public void setBallSpeed(int ball1Speed, int ball2Speed) {
+        //this.stop();
+        ball1.setSpeed(ball1Speed);
+        ball2.setSpeed(ball2Speed);
+        //ball1.setDirection(1, 0);
+        //ball2.setDirection(-1, 0);
     }
 
     public boolean isStarted() {

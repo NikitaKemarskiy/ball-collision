@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Form extends JFrame {
     // Private
@@ -24,8 +26,14 @@ public class Form extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 options.getStartButton().setText("Start"); // Set new text to the start button
-                graphics.setBallSize((int)(options.getBall1Spinner().getValue()), (int)(options.getBall2Spinner().getValue()));
-                graphics.repaint();
+                graphics.setBallSize((int)(options.getBall1SizeSpinner().getValue()), (int)(options.getBall2SizeSpinner().getValue()));
+                graphics.setBallSpeed((int)(options.getBall1SpeedSpinner().getValue()), (int)(options.getBall2SpeedSpinner().getValue()));
+                (new Timer()).schedule(new TimerTask() { // Set timeout to make isStarted false
+                    @Override
+                    public void run() {
+                        graphics.repaint();
+                    }
+                }, graphics.intervalTime);
             }
         });
         options.getStartButton().addActionListener(new ActionListener() {
