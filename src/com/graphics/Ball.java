@@ -94,24 +94,11 @@ public class Ball {
 
     // Static methods
     public static boolean movingOpposite(Ball ball1, Ball ball2) {
-        Ball ball1_ = new Ball(ball1);
-        Ball ball2_ = new Ball(ball2);
+        Direction speedDiff = new Direction(ball2.getDirecton().getX() * ball2.getSpeed() - ball1.getDirecton().getX() * ball1.getSpeed(), ball2.getDirecton().getY() * ball2.getSpeed() - ball1.getDirecton().getY() * ball1.getSpeed());
+        Direction positionDiff = new Direction(ball2.getPosition().getX() - ball1.getPosition().getX(), ball2.getPosition().getY() - ball1.getPosition().getY());
 
-        ball1_.getPosition().setX(((int)(ball1_.getDirecton().getX() < 0 ? Math.ceil(ball1_.getPosition().getX() - ball1_.getDirecton().getX()) : Math.floor(ball1_.getPosition().getX() - ball1_.getDirecton().getX()))));
-        ball1_.getPosition().setY(((int)(ball1_.getDirecton().getY() < 0 ? Math.ceil(ball1_.getPosition().getY() - ball1_.getDirecton().getY()) : Math.floor(ball1_.getPosition().getY() - ball1_.getDirecton().getY()))));
-        ball2_.getPosition().setX(((int)(ball2_.getDirecton().getX() < 0 ? Math.ceil(ball2_.getPosition().getX() - ball2_.getDirecton().getX()) : Math.floor(ball2_.getPosition().getX() - ball2_.getDirecton().getX()))));
-        ball2_.getPosition().setY(((int)(ball2_.getDirecton().getY() < 0 ? Math.ceil(ball2_.getPosition().getY() - ball2_.getDirecton().getY()) : Math.floor(ball2_.getPosition().getY() - ball2_.getDirecton().getY()))));
+        double dotProduct = Direction.dotProduct(speedDiff, positionDiff);
 
-        /*ball1_.getPosition().setX(((int)(ball1_.getDirecton().getX() < 0 ? Math.floor(ball1_.getPosition().getX() + ball1_.getDirecton().getX()) : Math.ceil(ball1_.getPosition().getX() + ball1_.getDirecton().getX()))));
-        ball1_.getPosition().setY(((int)(ball1_.getDirecton().getY() < 0 ? Math.floor(ball1_.getPosition().getY() + ball1_.getDirecton().getY()) : Math.ceil(ball1_.getPosition().getY() + ball1_.getDirecton().getY()))));
-        ball2_.getPosition().setX(((int)(ball2_.getDirecton().getX() < 0 ? Math.floor(ball2_.getPosition().getX() + ball2_.getDirecton().getX()) : Math.ceil(ball2_.getPosition().getX() + ball2_.getDirecton().getX()))));
-        ball2_.getPosition().setY(((int)(ball2_.getDirecton().getY() < 0 ? Math.floor(ball2_.getPosition().getY() + ball2_.getDirecton().getY()) : Math.ceil(ball2_.getPosition().getY() + ball2_.getDirecton().getY()))));*/
-
-        double distance = Math.sqrt(Math.pow((ball2.getPosition().getX() - ball1.getPosition().getX()), 2) + Math.pow((ball2.getPosition().getY() - ball1.getPosition().getY()), 2));
-        double distance_ = Math.sqrt(Math.pow((ball2_.getPosition().getX() - ball1_.getPosition().getX()), 2) + Math.pow((ball2_.getPosition().getY() - ball1_.getPosition().getY()), 2));
-        if (distance_ <= distance) {
-            return true;
-        }
-        return false;
+        return dotProduct > 0 ? true : false;
     }
 }
